@@ -2,7 +2,7 @@
 rm(list = ls())
 #current location
 getwd()
-
+set.seed(10012019)
 #set directory to a default location
 setwd("C:/Users/heidej/Documents/")
 #create a subdirectory for this class materials, titled intro to R
