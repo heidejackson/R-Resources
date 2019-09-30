@@ -1,0 +1,90 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+\setcounter{secnumdepth}{0}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+\title{Useful R Packages}
+\author{Heide Jackson 
+\\University of Maryland Population Research Center\\ \url{heidej@umd.edu}}
+
+\date{September 2019}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\pagebreak
+\section*{Disclaimers}
+R and R packages are user developed and user maintained.  Some R packages may not be compatible with others and some R functions may not work on all versions of R.  
+
+\section{Installing and Using Packages}
+Using packages within an R session requires two steps:
+\begin{enumerate}
+    \item Installation 
+    \item Loading
+\end{enumerate}
+Below is a quick example of R code to install and load a package.
+\begin{verbatim}
+install.packages("Hmisc") #needed once
+library("Hmisc") # needed every time you want to use the package in a session
+\end{verbatim}
+Typically, installation will only need to be done once, but the library function will be needed every time you want to use a package's functions within your R session.
+\section{Version Control}
+R and R packages are dynamic. Sometimes if you want code to remain reproducible, it may be of interest to use an R package that maintains version control. 
+
+\pagebreak
+\section{Useful R Packages}
+\subsection{General Use Packages}
+\begin{itemize}
+
+    \item \href{https://www.tidyverse.org/}{Tidyverse} a collection of packages for cleaning, manipulating, and visualizing data.  The grammar of functions in the tidyverse is very similar to Pandas in python.   
+    
+    As mentioned, Tidyverse is a collection of packages.  Installing Tidyverse will download all of these packages, but packages are best loaded individually.  Below is a list of packages in the tidyverse I find particularly helpful:
+    \begin{itemize}
+        \item \href{https://haven.tidyverse.org/}{haven} Reads in and writes data from other statistical packages. My experience is this works better for Stata than SAS.
+        \item \href{https://readr.tidyverse.org/}{readr} Reads in and writes rectangular data sets.  Typically, these are csv or text files.
+        \item \href{https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html}{dplyr} Manipulates data in various ways.  Contains functions to keep, drop, reorganize, and modify data.
+        \item 
+        \href{https://ggplot2.tidyverse.org/}{ggplot2}  THE package for data visualization in R.
+    \end{itemize}
+    
+    \item \href{https://cran.r-project.org/web/packages/stargazer/vignettes/stargazer.pdf}{stargazer} Provides the ability to generate pretty tables from R output.
+    \item \href{https://cran.r-project.org/web/packages/Hmisc/Hmisc.pdf}{Hmisc} An assortment of miscellaneous packages that assist in data manipulation and analysis.
+    
+    \end{itemize}
+    \subsection{Version Control Packages}
+    \begin{itemize}
+    \item \href{https://rviews.rstudio.com/2018/01/18/package-management-for-reproducible-r-code/}{Useful information} about R version control and different options on how to go about it.
+    \item \href{https://cran.r-project.org/web/packages/packrat/packrat.pdf}{packrat} Version control package that I personally like.
+    \item \href{https://docs.docker.com/install/}{docker} Another version control option that comes recommended.
+    \end{itemize}
+    \subsection{Multiple Imputation Packages}
+    \begin{itemize}
+       \item  \href{https://www.rdocumentation.org/packages/mice/versions/3.6.0/topics/mice|}{mice} Offers different options for imputing data in R.
+       \item \href{https://cran.r-project.org/web/packages/mitools/mitools.pdf}{mitools} Offers tools for working with multiply imputed data in R.
+       \end{itemize}
+       \subsection{Survey Packages}
+       \begin{itemize}
+      \item \href{https://cran.r-project.org/web/packages/survey/survey.pdf}{survey} Provides functions for working with survey data and incorporating survey weights into analysis.
+      \end{itemize}
+      \subsection{Statistical Methods Packages}
+      \begin{itemize}
+      \item \href{https://cran.r-project.org/web/packages/nnet/nnet.pdf}{nnet} Functions for running multinomial logistic regression in R. 
+      \item \href{https://cran.r-project.org/web/packages/survival/survival.pdf}{survival} Provides functions for fitting and evaluating single state survival models (event history analysis) in R.
+      \item \href{https://cran.r-project.org/web/packages/multistate/multistate.pdf}{multistate} Provides functions for fitting and evaluating multistate models in R.
+      \item \href{https://cran.r-project.org/web/packages/boot/boot.pdf}{boot} Bootstraps data in R.
+      \end{itemize}
+\subsection{Data Visualization Packages}
+\begin{itemize}
+\item   \href{https://ggplot2.tidyverse.org/}{ggplot2}  THE package for data visualization in R.  A lot of people like and use this package.  I like it mainly for difficult or complex graphics.
+\item \href{https://cran.r-project.org/web/packages/lattice/lattice.pdf}{lattice} Offers function for making multi-panel graphs.
+\item \href{https://cran.r-project.org/web/packages/RColorBrewer/RColorBrewer.pdf}{RColorBrewer} Allows for custom color creation in R.
+    
+
+\end{itemize}
+\end{document}
