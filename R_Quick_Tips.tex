@@ -4,7 +4,7 @@
 \usepackage{tikz}
 \usepackage{hyperref}
 \setbeamertemplate{footline}[frame number]
-\title{Quick R Tips}
+\title{Introduction to R}
 \author{Heide Jackson }
 \date{August 2019}
 
@@ -12,68 +12,55 @@
 
 \maketitle
 
-\begin{frame}{High Level Things to Know}
+\begin{frame}{Introductions}
 \begin{itemize}
-\item R is free and always will be.
-\item It's a flexible statistical software environment based on the S language.
-\item R is dynamic and updated more frequently than other statistical software packages like SAS or Stata.
-\item R is user driven and its functionality is greatly enhanced by user contributed packages.
-\item R Studio is a nice wrapper for accessing R
+\item Name?
+\item Affiliation?
+\item Experience using other statistical processing programs (SAS?, R? SPSS? Stata?)
+\item Something you'd like to get out of this class?
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{The basics of doing anything in R}
-\begin{verbatim}
-object<-function(...)
-or equivalently
-object=function()
-\end{verbatim}
+\begin{frame}{Objectives for Today}
 \begin{itemize}
-    \item Functions may be built into R's basic system, loaded in from packages, or defined by you, the user.
+    \item Know how to install R and RStudio.
+    \item Understand the concept of packages and how to find out more about them.
+    \item Summarize a dataset and variables within it.
+    \item Manipulate a variable and adding a new variable to a dataset.
+    \item Perform linear regression.
+    \item Save R sessions and data files.
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Other Things To Know}
+\begin{frame}{Opening R}
 \begin{itemize}
-    \item R is case sensitive. E.g. x and X will be stored in R as two different objects.
-    \item The help function is your friend.  If you are trying to figure out what a function does, type help(functioname) or equivalently ?functionname.
-    \item Objects can be embedded in other objects.  If you call data\$x, this can be different from calling x.
-   \item \# is used prior to a comment.  Multi line comments aren't supported but there are system and program specific shorts cuts for this if you want them.
-    \end{itemize}
-    \end{frame}
+    \item In today's class we are going to discuss the basics of using R.
+    \item In this we are going to be using R as accessed through R Studio (V1.2.1335).
 
+\end{itemize}
+\end{frame}
 
-\begin{frame}{Common Hazards and Missteps of Working in R}{Redundancy}
+\begin{frame}{Downloading and Installing R}
 \begin{itemize}
-
-    \item Redundancy is major limitation and benefit to working in R.
+    \item If you are working from a computer lab computer, you should be able to directly connect to R Studio.
+    \item If you are working from your personal computer, you will need to download R and R Studio.  Here's how:
     \begin{itemize}
-        \item Any task, no matter how simple or mundane can be accomplished at least five different ways using R or user supplied packages.
-        \item Users may be overwhelmed by choice. 
-        \item The benefit to this is any task can be effectively dual coded.  When in doubt about what a function is doing, look for another package that does the same thing.
-        \item When trying to decide how to code, it's sometimes worth doing a task in the easiest way and (if not too difficult) a method that uses just base R.  
-    \end{itemize}
+        \item Download R from \url{https://cran.rstudio.com}
+    \item Next, you'll want to install RStudio from \url{https://www.rstudio.com/}
+   \end{itemize} 
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Common Hazards and Missteps of Working in R}{Quality Control}
-\begin{itemize}
-    \item Great R programmers may not be great researchers and vice versa.
-    \item How do you evaluate the quality of an R Package?
-    \begin{itemize}
-        \item For common tasks, packages that have been more extensively used tend to be better debugged.  
-        \item Right now the tidyverse collection of packages has  become the R version of mainstream.
-        \item For complex methods, research the contributor.  Where have they published?  What documentation do they provide?  What vignettes do they create?  What data do they use?
-    \end{itemize}
-\end{itemize}
+\begin{frame}{Opening R Studio}
+\begin{tikzpicture}
+\node [anchor=south west,inner sep=0] (image) at (0,0) {\includegraphics[width=.9\textwidth]{Rstudio.PNG}};
+\end{tikzpicture}
 \end{frame}
 
-\begin{frame}{Common Hazards and Missteps of Working in R}{Version Control}
+\begin{frame}{Starting an R Script}
 \begin{itemize}
-    \item R and its packages are frequently updated.  R code may work one day and crash the next.
-    \item Package control packages can help resolve this.  A couple of options to consider are docker and packrat.
-    \item As a global disclaimer, just because code is reproducible doesn't mean that it is correct.  
-    
+    \item We are going to start by creating a project directory that will house the R scripts, graphs, and data created during this session.
+    \item To do this, go to file, new project, and create a new directory titled Intro_to_R
 \end{itemize}
 \end{frame}
 
