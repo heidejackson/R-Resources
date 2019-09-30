@@ -4,7 +4,7 @@ rm(list = ls())
 getwd()
 
 #set directory to a default location
-setwd("C:/Users/mprc/Documents/")
+setwd("C:/Users/heidej/Documents/")
 #create a subdirectory for this class materials, titled intro to R
 dir.create("Intro_to_R")
 #now we are going to work from that location we just created intro to R
@@ -17,19 +17,23 @@ setwd("Intro_to_R")
 #steps.
 #First, the package needs to be installed, for this introduction, we are going to install a few
 #packages
-#install.packages("packrat")
-#install.packages("dplyr")
-#install.packages("readr")
-#install.packages("gapminder")
-#install.packages("haven")
+# install.packages("packrat")
+# install.packages("dplyr")
+# install.packages("readr")
+# install.packages("gapminder")
+# install.packages("haven")
 
-#packrat::init("~/Intro_to_R")
+
 #next, we are going to load the package, this is accomplished through the library function
 library("dplyr")
 library("readr")
 library("gapminder")
 library("haven")
 library("tibble")
+library("packrat")
+
+# packrat::init("~/Intro_to_R")
+# packrat::snapshot()
 #what do these packages do?  We can find out in a couple of ways
 ?readr
 help(readr)
@@ -48,6 +52,17 @@ help(readr)
 gmcsv<- read_csv("gapmindermiss.csv")
 # we can also define an object in R by using '='.  This yields the same thing as the <- syntax
 gmcsv2=read_csv("gapmindermiss.csv")
+
+#this method of loading in data requires the readr package.  We can read in csv files using base 
+#R, here's an example
+
+gmcsvb<- read.csv("gapmindermiss.csv")
+#what's the difference between this and the read_csv function?  Well in practice they are very similar
+#however, read_csv provides more information on potential errors on what is being loaded and saves 
+#data by default as a tibble, a special type of data frame, whereas read.csv saves data as a data.frame
+# we can see this by using something called a class function
+class(gmcsv)
+class(gmcsvb)
 
 #the same dataset can be read in from stata or sas via the read_dta and read_sas functions respectively
 gmdta<- read_dta("gapmindermiss.dta")
@@ -96,6 +111,28 @@ mean(lifeExp, na.rm=TRUE)
 
 #that's better and the results from the mean function match what we saw from summary.
 
+#let's say we care about the extreme ends of the distribution, the quantile function can help us view
+#values at particular parts of the distribution
+quantile(gmcsv$lifeExp, c(.02, .95), na.rm=TRUE)
+
+
+#one thing to note, so far we haven't saved our output anywhere, if we want to call these results
+#later we can
+q<- quantile(gmcsv$lifeExp, c(.02, .95), na.rm=TRUE)
+
+
+#these results can be useful if we want to look at these exceptional cases in the data.
+#here's how
+
+exceptional<- filter(gmcsv, lifeExp<=q[1] | lifeExp>=q[2])
+
+# again there are many ways to do this
+
+#just this won't return exactly the same thing, this is because of the differential handling of missing cases
+exceptional2<- gmcsv[(lifeExp<=q[1] | lifeExp>=q[2]),]
+
+#this will give the same thing as the filter command
+exceptional3<- gmcsv[(lifeExp<=q[1] | lifeExp>=q[2]) & is.na(lifeExp)==FALSE,]
 
 
 
@@ -103,6 +140,7 @@ mean(lifeExp, na.rm=TRUE)
 #again there are a number of different ways of doing this.
 #The mutate function can help us do this
 gmcsvm<- mutate(gmcsv, dummy=ifelse(year==2007, 1,0))
+
 
 #another option
 dummy2<-ifelse(gmcsv$year==2007, 1,0)
@@ -144,6 +182,24 @@ table(gmcsvm$dummy)
 table(gmcsvm$dummy[gmcsvm$year==2007])
 table(gmcsvm$dummy[gmcsvm$year!=2007])
 
+# a bit more data review, it is often of interest to see the percent of cases in a table category
+#prop.table can help with this
+prop.table(table(gmcsvm$dummy))
+
+
+#does life expectancy in 2007 differ from other years
+#let's do a simple t-test
+
+t.test(gmcsvm$lifeExp, gmcsvm$dummy)
+
+#woah look at those results, that doesn't look right
+
+#let's find out more information about the t.test function
+?t.test
+#ok, it looks like we need to denote that we expect a relationship between life expectancy
+#and our dummy variable, let's retry that 
+t.test(gmcsvm$lifeExp~gmcsvm$dummy)
+
 #now let's say we want to look at the relationship between gdp and life expectency
 #R's linear regression function can get us started
 lm(lifeExp~gdpPercap, data=gmcsvm)
@@ -153,6 +209,12 @@ lm(lifeExp~gdpPercap, data=gmcsvm)
 #the functionality of glm is similar to proc glm (for folks who have familiarity with sas)
 glm(lifeExp~gdpPercap, data=gmcsvm)
 
+#these functions have different options, one I find very useful is the subset function
+glm(lifeExp~gdpPercap, data=gmcsvm, subset=dummy==1)
+
+#if we care about this adjusting for country level fixed effects we can do that
+glm(lifeExp~gdpPercap+country, data=gmcsvm, subset=dummy==1)
+
 #running the lm function will run a linear regression model where life expectancy is regressed on gdp per capita.   
 #this will not save the regression results and by default running this command will just give us the regression coefficents.
 #given that we may want to reference these results later, let's save this model as an object, called m1
@@ -161,7 +223,15 @@ m1<- lm(lifeExp~gdpPercap, data=gmcsvm)
 #m1 contains the results of this regression model, if we just type
 m1 # this will give the same output as lm(lifeExp~gdpPercap, data=gmcsvm) 
 #to see more, we can use the summary function with the regression output
-summary(m1)
+m<- summary(m1)
+out<- coef(m)
+write.csv(out, "regressionresults.csv")
+#we could make this output a little prettier by modifying the rownames and colnames of the out object
+
+rownames(out)<- c("Intercept", "GDP per Capita")
+colnames(out)<- c("Coefficients", "Standard Error", "T Statistic", "P Value")
+write.csv(out, "regressionresults.csv")
+
 plot(m1)
 #summarizing m1 shows us that the linear regression cotains a lot more information than just the regression
 #coefficients seen earlier.  One way to see what's in this data set is to use the objects function
