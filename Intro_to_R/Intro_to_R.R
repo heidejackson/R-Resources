@@ -3,6 +3,7 @@ rm(list = ls())
 
 getwd()
 
+set.seed(10012019)
 
 setwd("C:/Users/heidej/Documents/")
 
