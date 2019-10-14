@@ -1,0 +1,81 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{verbatim}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{hyperref}
+
+\setbeamertemplate{footline}[frame number]
+\title{Creating R Functions}
+\author{\texorpdfstring{Heide Jackson \newline\url{heidej@umd.edu}}{Author}}
+\institute{University of Maryland Population Research Center}
+
+\date{August 2019}
+
+\begin{document}
+\maketitle
+\begin{frame}{High Level Things to Know}
+\begin{itemize}
+\item Custom functions can streamline R coding and group together related tasks.
+\item Functions are available in base R, via packages added, and can be readily created.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{The Structure of a Function}
+\begin{itemize}
+    \item All functions can be defined with a common structure
+\end{itemize}
+\begin{verbatim}
+#function name
+myfirstfunction<-
+#function denotes we are defining a function
+function
+#parantheses contain objects defined by function
+(){
+#within brackets give what the function does
+print("Hello")
+}
+\end{verbatim}
+\end{frame}
+
+
+\begin{frame}[fragile]{Viewing and Calling the Function}
+\begin{itemize}
+    \item To view what is in the user created function, we can just type myfirstfunction.
+    \item Running the function is similar type myfirstfunction()
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Useful Functions within a Function}
+\begin{itemize}
+    \item paste()--combines text or objects together.
+    \item assign()--assigns function, text, or something else to an object.
+    \item if(), else(), and print--if/else statements in combination with print can show warning messages or document function functioning.
+\end{itemize}
+\end{frame}
+\begin{frame}[fragile]{An Example of a Function in Action}{Adding a Prefix in a Data Frame}
+\lstset{language=R} 
+\begin{lstlisting}
+
+addprefix<- function(data,prefix){
+  tnames<-colnames(data)
+  nnames<-paste(prefix,tnames,sep="")
+  colnames(data)<-nnames
+  print(paste("All Variables Renamed with Prefix", prefix,
+  sep=" "))
+  return(data)
+}
+library("gapminder")
+addprefix(gapminder, "n")
+\end{lstlisting}
+\end{frame}
+\begin{frame}{Other Useful Things to Know}
+    \begin{itemize}
+        \item Objects defined for a function exist only in the context of that function.
+        \item When calling a function, R matches objects to function names based on position.
+        \item Source function can be used to load in functions stored in other scripts.
+    \end{itemize}
+\end{frame}
+\end{document}
